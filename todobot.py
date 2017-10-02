@@ -16,3 +16,9 @@ def get_json_from_url(url):
     content = get_url(url)
     js = json.loads(content)
     return js
+
+
+def get_updates():
+    url = URL + "getUpdates"
+    js = get_json_from_url(url)
+    return js
