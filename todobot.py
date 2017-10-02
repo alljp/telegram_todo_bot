@@ -1,6 +1,7 @@
 import json
 import requests
 import os
+import time
 
 TOKEN = os.environ['BOT_API_TOKEN']
 URL = "https://api.telegram.org/bot{}/".format(TOKEN)
@@ -30,3 +31,8 @@ def get_last_msg(updates):
     chat_id = updates["result"][last_update]["message"]["chat"]["id"]
     text = updates["result"][last_update]["message"]
     return (chat_id, text)
+
+
+def send_msg(chat_id, text):
+    url = URL + "sendMessage?text={}&chat_id={}".format(text, chat_id)
+    get_url(url)
