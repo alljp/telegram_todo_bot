@@ -30,3 +30,8 @@ def get_last_msg(updates):
     chat_id = updates["result"][last_update]["message"]["chat"]["id"]
     text = updates["result"][last_update]["message"]
     return (chat_id, text)
+
+
+def send_msg(text, chat_id):
+    url = URL + "sendMessage?text={}&chat_id={}".format(text, chat_id)
+    get_url(url)
