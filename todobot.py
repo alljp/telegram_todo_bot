@@ -19,8 +19,10 @@ def get_json_from_url(url):
     return js
 
 
-def get_updates():
-    url = URL + "getUpdates"
+def get_updates(offset=None):
+    url = URL + "getUpdates?timeout=100"
+    if offset:
+        url += "&offset={}".format(offset)
     js = get_json_from_url(url)
     return js
 
@@ -36,3 +38,34 @@ def get_last_msg(updates):
 def send_msg(chat_id, text):
     url = URL + "sendMessage?text={}&chat_id={}".format(text, chat_id)
     get_url(url)
+
+
+def get_last_update_id(updates):
+    update_ids = []
+    for update in updates["result"]:
+        update_ids.append(int(update["update_id"]))
+    return max(update_ids)
+
+
+def echo_all(updates):
+    for update in updates["result"]:
+        try:
+            chat_id = update["message"]["chat"]["id"]
+            text = update["message"]["text"]
+            send_msg(chat_id, text)
+        except Exception as e:
+            print(e)
+
+
+def main():
+    last_update_id = None
+    while True:
+        updates = get_updates(last_update_id)
+        if len(updates["result"]) > 0:
+            last_update_id = get_last_update_id(updates) + 1
+            echo_all(updates)
+        time.sleep(0.5)
+
+
+if __name__ == '__main__':
+    main()
