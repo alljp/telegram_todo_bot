@@ -58,12 +58,12 @@ def echo_all(updates):
 
 
 def main():
-    last_chat = (None, None)
+    last_update_id = None
     while True:
-        chat_id, text, = get_last_msg(get_updates())
-        if (chat_id, text) != last_chat:
-            send_msg(chat_id, text)
-            last_chat = (chat_id, text)
+        updates = get_updates(last_update_id)
+        if len(updates["result"]) > 0:
+            last_update_id = get_last_update_id(updates) + 1
+            echo_all(updates)
         time.sleep(0.5)
 
 
