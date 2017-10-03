@@ -47,6 +47,16 @@ def get_last_update_id(updates):
     return max(update_ids)
 
 
+def echo_all(updates):
+    for update in updates["result"]:
+        try:
+            chat_id = update["message"]["chat"]["id"]
+            text = update["message"]["text"]
+            send_msg(chat_id, text)
+        except Exception as e:
+            print(e)
+
+
 def main():
     last_chat = (None, None)
     while True:
