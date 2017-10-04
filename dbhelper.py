@@ -21,3 +21,7 @@ class DBHelper:
         self.conn.execute(
             "DELETE FROM items WHERE description = (?)", (item_text, ))
         self.conn.commit()
+
+    def get_items(self):
+        return [x[0] for x in self.conn.execute(
+                "SELECT description FROM items")]
