@@ -11,3 +11,8 @@ class DBHelper:
         self.conn.execute(
             "CREATE TABLE IF NOT EXISTS items (description text)")
         self.conn.commit()
+
+    def add_item(self, item_text):
+        self.conn.execute(
+            "INSERT INTO items (description) VALUES (?)", (item_text, ))
+        self.conn.commit()
