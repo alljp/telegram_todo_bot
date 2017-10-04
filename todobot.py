@@ -49,14 +49,32 @@ def get_last_update_id(updates):
     return max(update_ids)
 
 
-def echo_all(updates):
+# def echo_all(updates):
+#     for update in updates["result"]:
+#         try:
+#             chat_id = update["message"]["chat"]["id"]
+#             text = update["message"]["text"]
+#             send_msg(chat_id, text)
+#         except Exception as e:
+#             print(e)
+
+
+def handle_updates(updates):
     for update in updates["result"]:
         try:
             chat_id = update["message"]["chat"]["id"]
             text = update["message"]["text"]
-            send_msg(chat_id, text)
-        except Exception as e:
-            print(e)
+            items = db.get_items()
+            if text in items:
+                db.delete_item(text)
+                items = db.get_items()
+            else:
+                db.add_item(text)
+                items = db.get_items()
+            message = "\n".join(items)
+            send_msg(chat_id, message)
+        except KeyError:
+            pass
 
 
 def main():
@@ -66,7 +84,8 @@ def main():
         updates = get_updates(last_update_id)
         if len(updates["result"]) > 0:
             last_update_id = get_last_update_id(updates) + 1
-            echo_all(updates)
+            # echo_all(updates)
+            handle_updates(updates)
         time.sleep(0.5)
 
 
