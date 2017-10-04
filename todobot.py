@@ -2,7 +2,9 @@ import json
 import requests
 import os
 import time
+from dbhelper import DBHelper
 
+db = DBHelper()
 TOKEN = os.environ['BOT_API_TOKEN']
 URL = "https://api.telegram.org/bot{}/".format(TOKEN)
 
