@@ -60,6 +60,7 @@ def echo_all(updates):
 
 
 def main():
+    db.setup()
     last_update_id = None
     while True:
         updates = get_updates(last_update_id)
