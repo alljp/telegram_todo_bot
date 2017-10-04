@@ -16,3 +16,8 @@ class DBHelper:
         self.conn.execute(
             "INSERT INTO items (description) VALUES (?)", (item_text, ))
         self.conn.commit()
+
+    def delete_item(self, item_text):
+        self.conn.execute(
+            "DELETE FROM items WHERE description = (?)", (item_text, ))
+        self.conn.commit()
