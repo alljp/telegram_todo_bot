@@ -76,6 +76,8 @@ def handle_updates(updates):
             elif text in items:
                 db.delete_item(text, chat_id)
                 items = db.get_items(chat_id)
+                message = "\n".join(items)
+                send_msg(chat_id, message)
             else:
                 db.add_item(text, chat_id)
                 items = db.get_items(chat_id)
