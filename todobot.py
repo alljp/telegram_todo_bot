@@ -71,6 +71,11 @@ def handle_updates(updates):
                 send_msg(
                     chat_id, "Welcome to your personal To Do list." +
                     " Send any text to me and I'll store it as an item.")
+            elif text == "/help":
+                send_msg(chat_id,
+                         "Send the todo item to be stored as text message.\n" +
+                         "To delete a todo when done, just send" +
+                         " the todo text message")
             elif text.startswith("/"):
                 continue
             elif text in items:
