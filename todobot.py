@@ -2,6 +2,7 @@ import json
 import requests
 import os
 import time
+import urllib
 from dbhelper import DBHelper
 
 db = DBHelper()
@@ -38,6 +39,7 @@ def get_last_msg(updates):
 
 
 def send_msg(chat_id, text):
+    text = urllib.parse.quote_plus(text)
     url = URL + "sendMessage?text={}&chat_id={}".format(text, chat_id)
     get_url(url)
 
