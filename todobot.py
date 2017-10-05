@@ -67,14 +67,20 @@ def handle_updates(updates):
             chat_id = update["message"]["chat"]["id"]
             text = update["message"]["text"]
             items = db.get_items(chat_id)
-            if text in items:
+            if text == "/start":
+                send_msg(
+                    chat_id, "Welcome to your personal To Do list." +
+                    " Send any text to me and I'll store it as an item.")
+            elif text.startswith("/"):
+                continue
+            elif text in items:
                 db.delete_item(text, chat_id)
                 items = db.get_items(chat_id)
             else:
                 db.add_item(text, chat_id)
                 items = db.get_items(chat_id)
-            message = "\n".join(items)
-            send_msg(chat_id, message)
+                message = "\n".join(items)
+                send_msg(chat_id, message)
         except KeyError:
             pass
 
